@@ -72,19 +72,18 @@ bool Memory::getMCell(int i)
 {
 	return cell[i].state;
 }
-void Memory::setMCell(int i, int num)
+void Memory::setMCellT(int i, int num)
 {
-	if (!cell[i].state) 
-	{
 	cell[i].state=true; 
 	cell[i].task = num;
-	} 
-	else
-    {
+	if (list)
+	printf ("Memory type of %d : DEBUG: Change state the cell # %d to %d\n",getMType(),i,cell[i].state);
+}
+void Memory::setMCellF(int i,int num)
+{
 	cell[i].state = false;
-	 cell[i].task=0;
-	}
-	//if (list)
+	cell[i].task=0;
+	if (list)
 	printf ("Memory type of %d : DEBUG: Change state the cell # %d to %d\n",getMType(),i,cell[i].state);
 }
 int Memory::getMSpeed()

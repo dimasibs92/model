@@ -71,7 +71,6 @@ void Task::checkTask(int count)
 		}
 		break;	}
 	}
-	printf ("time = %d\n",time);
 }
 int Task::getCores()
 {
@@ -83,7 +82,7 @@ int Task::getMemory()
 }
 void Task::runTask(int* pc, int* m,int n)
 {
-//	if (list)
+	if (list)
 	printf ("Task %d: DEBUG : Try to run the action %d. For launch this task need %d cores and %d memory ",num,act->getNum(),act->getCores(),act->getMemory());
 	act->setaction(pc,m,n);
 	time+=act->getDelay();

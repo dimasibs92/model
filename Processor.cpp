@@ -60,32 +60,29 @@ bool Processor::getLCoreState(int i)
 {
 	return lcores[i].state;
 }
-void Processor::setPCoreState(int i,int num)
+void Processor::setPCoreStateT(int i,int num)
 {
-	if (!pcores[i].state)
-	 {
-	 	pcores[i].state = true;
-	 	pcores[i].task = num;
-	 }
-	else
-	 {
-	 	pcores[i].state = false;
-	 	pcores[i].task = 0;
-	 }
+ 	pcores[i].state = true;
+ 	pcores[i].task = num;
+ 	if (list)
 	printf("Processor: DEBUG : Change state physical core %d of busy on %d\n",i,pcores[i].state);
 }
-void Processor::setLCoreState(int i,int num)
+void Processor::setPCoreStateF(int i,int num)
 {
-	if (!lcores[i].state)
-	 {
-	 	lcores[i].state = true;
-	 	lcores[i].task = num;
-	 }
-	else
-	 {
-	 	lcores[i].state = false;
-	 	lcores[i].task = 0;
-	 }
-	 printf("Processor: DEBUG : Change state logical core %d of busy on %d\n",i,lcores[i].state);
-}	
-
+ 	pcores[i].state = false;
+ 	pcores[i].task = 0;
+ 	if (list)
+ 	printf("Processor: DEBUG : Change state physical core %d of busy on %d\n",i,pcores[i].state);
+}
+void Processor::setLCoreStateT(int i,int num)
+{
+  lcores[i].state = true;
+  lcores[i].task = num;
+}
+void Processor::setLCoreStateF(int i,int num)	 
+{
+  lcores[i].state = false;
+  lcores[i].task = 0;
+  if (list)
+  printf("Processor: DEBUG : Change state logical core %d of busy on %d\n",i,lcores[i].state);
+}

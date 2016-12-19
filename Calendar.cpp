@@ -36,7 +36,7 @@ void Calendar::setMemory(Memory *m,int need,int num)
 	int* a = new int[need];
 	a = select_no_return(m->getMCount(),need);
 	 for (int i=0;i<need;i++)
-	 m->setMCell(a[i],num);
+	 m->setMCellT(a[i],num);
 	 delete[] a;
 }
 int* Calendar::initProc(Processor *p,int num)
@@ -89,11 +89,11 @@ void Calendar::setProcessor(Processor *p,int pneed, int lneed,int num)
 	int* la = new int[lneed];
 	pa = select_no_return(p->getPnc(),pneed);
 	 for (int i=0;i<pneed;i++)
-	 p->setPCoreState(pa[i],num);
+	 p->setPCoreStateT(pa[i],num);
 	 delete[] pa;
 	la = select_no_return(p->getLnc(),lneed);
 	 for (int i=0;i<lneed;i++)
-	 p->setLCoreState(la[i],num);
+	 p->setLCoreStateT(la[i],num);
 	 delete[] la;
 }
 void Calendar::getMemory(Memory *m)
@@ -124,9 +124,6 @@ void Calendar::add(int i, int time)
 	Task* t1 = new Task(index);
 	t1->checkTask(tasks);
     temp.t = t1;
-    printf ("num: %d ",temp.t->getN());
-    printf ("%d\n",time);
-    printf ("gl_time = %d\n",gl_time);
 	temp.timestart = time;
 	q.push(temp);
 	index++;
@@ -163,23 +160,18 @@ void Calendar::runTask(int timestart)
 	 	temp = tp.front();
 	 	if (temp.timestart==timestart)
 	 	{
-	 	printf ("break");
 	 	break;
 	 	}
 	 	tp.pop();
 	 }
-	printf("find\n");
-	printf("run %d\n",temp.t->getN());
 	int cores = temp.t->getCores();
 	int mems = temp.t->getMemory();
 	printf ("need: %d cores %d mems\n",cores,mems);
 	if (temp.t->getParal())
 	{
-		printf ("paral cores");
 		if (p->getPnc()+p->getLnc()<cores)
 		{
 		 temp.t->setError();
-		 //errorruntask = true;
 	 	 return;
 	    }
 		else
@@ -192,18 +184,15 @@ void Calendar::runTask(int timestart)
     }
 	else
 	{
-	printf ("not paral cores");
 	if (p->getPnc()<cores)
 	{
 	 temp.t->setError();
-	 //errorruntask = true;
 	 return;
     }
 	else
 	setProcessor(p,temp.t->getCores(),0,temp.t->getN());
 	}
 	bool initmem = false;
-	printf ("memory ram");
 	if (mems>mram->getMSize()*mram->getMCount())
 	{
 	 setMemory(mram,mram->getMCount(),temp.t->getN());
@@ -215,7 +204,6 @@ void Calendar::runTask(int timestart)
      setMemory(mram,count,temp.t->getN());
      initmem = true;
     }
-    printf ("memory swap");
     if (!initmem)
     {
     if (mems>mswap->getMSize()*mswap->getMCount())
@@ -230,7 +218,6 @@ void Calendar::runTask(int timestart)
      initmem = true;
     }
     }
-    printf ("memory ssd");
     if (!initmem)
     {
     if (mems>mpssd->getMSize()*mpssd->getMCount())
@@ -264,7 +251,6 @@ void Calendar::runTask(int timestart)
     if (mems>mhdd->getMSize()*mhdd->getMCount())
     {
      temp.t->setError();
-     //errorruntask = true;
      return;
     }
     else
@@ -274,18 +260,14 @@ void Calendar::runTask(int timestart)
      initmem = true;
     }
     }
-    printf ("set\n");
 	int* pr = initProc(p,temp.t->getN());
 	int* m = initMem(mram,mswap,mpssd,msssd,mhdd,temp.t->getN());
-	printf ("init\n");
 	temp.t->runTask(pr,m,temp.t->getNum());
 	if(temp.t->getEndTask())
 	 ctask++;
-	 printf ("\nctask: %d",ctask);
 }
 void Calendar::clearTask(int timestart)
 {
-	printf ("Clear Task\n");
 	event temp;
 	int count=0;
 	queue<event> l = q;
@@ -294,41 +276,38 @@ void Calendar::clearTask(int timestart)
 	while(!l.empty()) {
         temp = l.front();
         count++;
-      // printf ("%d",temp.t->getEndTask()); 
     if ((temp.t->getEndTask() && temp.timestart==timestart) || (temp.t->getError() && temp.timestart==timestart))
     {
     find = true;
 	for (int i=0;i<p->getPnc();i++)
 	 if (p->getPCoreStateNum(i,temp.t->getN()) && p->getPCoreState(i))
-	  p->setPCoreState(i,0);
+	  p->setPCoreStateF(i,0);
 	for (int i=0;i<p->getLnc();i++)
 	 if (p->getLCoreStateNum(i,temp.t->getN()) && p->getLCoreState(i))
-	  p->setLCoreState(i,0);  	  
+	  p->setLCoreStateF(i,0);  	  
 	for (int i=0;i<mram->getMCount();i++)
 	 if (mram->getMCellNum(i,temp.t->getN()) && mram->getMCell(i))
-	 mram->setMCell(i,0);
+	 mram->setMCellF(i,0);
 	for (int i=0;i<mswap->getMCount();i++)
 	 if (mswap->getMCellNum(i,temp.t->getN()) && mswap->getMCell(i))
-	 mswap->setMCell(i,0);
+	 mswap->setMCellF(i,0);
 	for (int i=0;i<mpssd->getMCount();i++)
 	 if (mpssd->getMCellNum(i,temp.t->getN()) && mpssd->getMCell(i))
-	 mpssd->setMCell(i,0);
+	 mpssd->setMCellF(i,0);
 	for (int i=0;i<msssd->getMCount();i++)
 	 if (msssd->getMCellNum(i,temp.t->getN()) && msssd->getMCell(i))
-	 msssd->setMCell(i,0);
-	  if (temp.t->getEndTask())
+	 msssd->setMCellF(i,0);
+	for (int i=0;i<mhdd->getMCount();i++)
+	 if (mhdd->getMCellNum(i,temp.t->getN()) && mhdd->getMCell(i))
+	 mhdd->setMCellF(i,0);
+	   if (temp.t->getEndTask())
 	    gl_time+=temp.t->getTimeTask();
 	  if (temp.t->getError())
 	    gl_time+=delay;
-	for (int i=0;i<mhdd->getMCount();i++)
-	 if (mhdd->getMCellNum(i,temp.t->getN()) && mhdd->getMCell(i))
-	 mhdd->setMCell(i,0);
-	printf("\n!!!!!!!!!!!\n");
     break;
 	}
 	l.pop();
    }
-  printf ("rewrite\n");
   if (find)
   {
   int qsize = q.size();
@@ -349,7 +328,8 @@ void Calendar::show()
 	while(!qt.empty())
 	{
 		temp = qt.front();
-		printf ("number of task: %d time of start: %d\n",temp.t->getN(),temp.timestart);
+		if (list)
+		printf ("Calendar: DEBUG: number of task: %d time of start: %d\n",temp.t->getN(),temp.timestart);
 		qt.pop();
 	}
 }

@@ -17,11 +17,11 @@ int* select_no_return(int count,int need)
 		v[i].p = (float)1/count;
 	}
     float sum=0;
-	int j=0;
     float cur=0;
     double s=0;
-   // printf ("count = %d need = %d\n",count,need);
-    while (count!=0)
+    int j=0;
+ //   printf ("count = %d need = %d\n",count,need);
+    while (need!=0)
     {
     s=0;sum=0;
     for (int i=0;i<count;i++)
@@ -34,20 +34,19 @@ int* select_no_return(int count,int need)
     	sum+=v[i].p;
     	if (sum>=cur*s)
     	{
-    	//	printf("%d - %f %f %f\n",i,sum,cur,s);
+ //   		printf("%d - %f %f %f\n",i,sum,cur,s);
 		v[i].p=v[count-1].p;
     			n[j] = v[i].value;
     		v[i].value = v[count-1].value;
-    	//	printf ("%d busy",i);
     		j++;
-    	    if (j==need)
-    	     return n;
+    		need--;
     		count--;
     	    break;
 //    	    }
     	}
     }
     }
+    return n;
 }
 double f(double x)
 {

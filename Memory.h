@@ -20,7 +20,8 @@ Memory(int s,int c,TypeMemory* t); // constructor of class Memory with input par
 void setMFreq(int f); // procedure for set frequency of RAM
 void setMSize(int s); // procedure for set size of cell memory 
 void setMCount(int c); // procedure for set count of cells memory
-void setMCell(int i,int num); // procedure for setup reverse state for i-cell
+void setMCellT(int i,int num); // procedure for setup true state for i-cell
+void setMCellF(int i,int num); // procedure for setup false state for i-cell
 void setMSpeed();
 int getMSpeed();
 int getMFreq(); // return frequency of memory

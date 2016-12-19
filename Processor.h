@@ -21,7 +21,9 @@ bool getPCoreStateNum(int i,int num); // return the state of physical i-core pro
 bool getLCoreStateNum(int i,int num); // return the state of logical i-core processor	
 bool getPCoreState(int i); // return the state of physical i-core processor
 bool getLCoreState(int i); // return the state of logical i-core processor	
-void setPCoreState(int i,int num);
-void setLCoreState(int i,int num);
+void setPCoreStateT(int i,int num);
+void setPCoreStateF(int i,int num);
+void setLCoreStateT(int i,int num);
+void setLCoreStateF(int i,int num);
 ~Processor();	
 };

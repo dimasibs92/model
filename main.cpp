@@ -11,6 +11,7 @@ int main(int argc, char** argv) {
 	int arg[input];
 	if (argc>=2)
 	{
+		printf ("Read from File Mode:\n");
 		ifstream ifs;
 		ifs.open(argv[1]);
 		for (int i=0;i<input;i++)
@@ -18,14 +19,13 @@ int main(int argc, char** argv) {
 			ifs >> arg[i]; 
 		}
 		ifs >> list;
-		printf ("%d %d\n",arg[0],arg[1]);
     }
     else
     {
-    	printf ("default\n");
-    	arg[0] = 2; 	// count of physical cores of processor
-    	arg[1] = 2;		// count of logical cores of processor 
-    	arg[2] = 8;		// count of cells of ram
+    	printf ("Default mode:\n");
+    	arg[0] = 8; 	// count of physical cores of processor
+    	arg[1] = 8;		// count of logical cores of processor 
+    	arg[2] = 16;		// count of cells of ram
     	arg[3] = 256; 	// size of one ram
     	arg[4] = 1600; 	// frequency of one cell ram
     	arg[5] = 2;		// count of cells of swap
@@ -59,9 +59,7 @@ int main(int argc, char** argv) {
 	 }
 	 else
 	 {
-	 printf ("after run and clean: %d\n",gl_time);
      i = cal->getIndex();
-     
      cal->setIndex(i++);
      while(1) {
      if (t>=gl_time+1 && t<gl_time+10)
