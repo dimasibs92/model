@@ -1,0 +1,49 @@
+# Project: pr1
+# Makefile created by Dev-C++ 5.6.2
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o Memory.o TypeMemory.o Processor.o Task.o Calendar.o func.o action.o
+LINKOBJ  = main.o Memory.o TypeMemory.o Processor.o Task.o Calendar.o func.o action.o
+LIBS     = -L"D:/Program Files/Dev-Cpp/MinGW32/lib" -L"D:/Program Files/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g3
+INCS     = -I"D:/Program Files/Dev-Cpp/MinGW32/include" -I"D:/Program Files/Dev-Cpp/MinGW32/mingw32/include" -I"D:/Program Files/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include"
+CXXINCS  = -I"D:/Program Files/Dev-Cpp/MinGW32/include" -I"D:/Program Files/Dev-Cpp/MinGW32/mingw32/include" -I"D:/Program Files/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include" -I"D:/Program Files/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include/c++"
+BIN      = pr1.exe
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+Memory.o: Memory.cpp
+	$(CPP) -c Memory.cpp -o Memory.o $(CXXFLAGS)
+
+TypeMemory.o: TypeMemory.cpp
+	$(CPP) -c TypeMemory.cpp -o TypeMemory.o $(CXXFLAGS)
+
+Processor.o: Processor.cpp
+	$(CPP) -c Processor.cpp -o Processor.o $(CXXFLAGS)
+
+Task.o: Task.cpp
+	$(CPP) -c Task.cpp -o Task.o $(CXXFLAGS)
+
+Calendar.o: Calendar.cpp
+	$(CPP) -c Calendar.cpp -o Calendar.o $(CXXFLAGS)
+
+func.o: func.cpp
+	$(CPP) -c func.cpp -o func.o $(CXXFLAGS)
+
+action.o: action.cpp
+	$(CPP) -c action.cpp -o action.o $(CXXFLAGS)
