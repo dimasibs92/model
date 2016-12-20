@@ -25,10 +25,10 @@ int main(int argc, char** argv) {
     	printf ("Default mode:\n");
     	arg[0] = 8; 	// count of physical cores of processor
     	arg[1] = 8;		// count of logical cores of processor 
-    	arg[2] = 16;		// count of cells of ram
+    	arg[2] = 32;		// count of cells of ram
     	arg[3] = 256; 	// size of one ram
     	arg[4] = 1600; 	// frequency of one cell ram
-    	arg[5] = 2;		// count of cells of swap
+    	arg[5] = 16;		// count of cells of swap
     	arg[6] = 512;	// size of one cell swap
     	arg[7] = 500;	// speed of transmit data from swap to ram
     	arg[8] = 32;    // count of cells of ssd pci-ex
@@ -72,6 +72,7 @@ int main(int argc, char** argv) {
 	gl_time++;
     }
     cal->clearAll();
-    printf ("Count of complete tasks: %d",cal->getCTask());
+    printf ("Count of complete tasks: %d\n",cal->getCTask());
+    printf ("Global time: %d\n",gl_time);
 	return 0;
 }

@@ -50,24 +50,28 @@ void action::action_temp(int *pc,int *mems,int n)
 			while(1)	{
 			if (temp>=1 && temp<(int)speedswap*10/freqram) 
 				break;	
+				printf ("swap %d",temp);
 				temp=static_cast <int> (exp_rasp((double) speedswap/freqram));
 			}}  
 			case 2: {
 			while(1)	{
 			if (temp>=1 && temp<(int)speedssdpci*5/freqram) 
-				break;	
+				break;
+				printf ("ssd pci %d",temp);	
 				temp=static_cast <int> (exp_rasp((double) speedssdpci/freqram));
 			}}
 			case 3: {
 			while(1)	{
 			if (temp>=1 && temp<(int)speedssdsata*10/freqram) 
 				break;	
+				printf ("ssd sata %d",temp);
 				temp=static_cast <int> (exp_rasp((double) speedssdsata/freqram));
 			}}
 			case 4: {
 			while(1)	{
-			if (temp>1 && temp<(int)speedhdd*100/freqram) 
+			if (temp>1 && temp<((int)speedhdd*100/freqram)+5) 
 				break;	
+				printf ("hdd %d",temp);
 				temp=static_cast <int> (exp_rasp((double) speedhdd/freqram));
 			}}
 		}
